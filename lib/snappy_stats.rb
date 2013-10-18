@@ -70,13 +70,13 @@ module SnappyStats
       ttl = granularity[:ttl]
       tsround = SnappyStats.getRoundedTimestamp(time, size * factor)
       redis_key = "#{hash_key}:#{key}:#{gran}:#{tsround}"
-      ts = getFactoredTimestamp time, factor
+      ts = getFactoredTimestamp time, factor      
       SnappyStats.connection.hincrby redis_key, ts, 1     
       SnappyStats.connection.expireat redis_key, tsround + ttl      
     end
   end
 
-    def self.get(gran, from, to, key)
+    def self.get(gran, from, to, key)      
       granularity = GRANULARITIES[gran]
       size = granularity[:size]
       factor = granularity[:factor]
@@ -89,8 +89,7 @@ module SnappyStats
       results = {}
       while ts <= to        
         tsround = getRoundedTimestamp( ts, size * factor )
-        redis_key  = "#{key}:#{gran}:#{tsround}"
-
+        redis_key  = "#{hash_key}:#{key}:#{gran}:#{tsround}"
         results[ts] = SnappyStats.connection.hget( redis_key, ts )
         i = i+1 
         ts = ts + GRANULARITIES[gran][:factor]

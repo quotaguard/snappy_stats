@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["tim@teachmatic.com"]
   spec.description   = %q{Metrics storage and retrieval library for time series data.}  
   spec.summary       = %q{Redis backed simple time series statistics gem}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/timrwilliams/snappy_stats"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
@@ -20,4 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
+  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "fakeredis"
+  spec.add_development_dependency "timecop"
 end
