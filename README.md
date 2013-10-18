@@ -1,4 +1,4 @@
-# snappy_stats [![Build Status](https://travis-ci.org/timrwilliams/snappy_stats.png?branch=master)](https://travis-ci.org/timrwilliams/snappy_stats)
+# snappy_stats [![Build Status](https://travis-ci.org/timrwilliams/snappy_stats.png?branch=master)](https://travis-ci.org/timrwilliams/snappy_stats)[![Gem Version](https://badge.fury.io/rb/snappy_stats.png)](http://badge.fury.io/rb/snappy_stats)
 
 This is a simple Ruby time series statistics gem that uses Redis for storage. Retrieval is optimised for graphing engines by nil filling empty time periods. I graph it with [Rickshaw] (code.shutterstock.com/rickshaw/).
 
