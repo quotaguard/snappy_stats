@@ -1,3 +1,3 @@
-module SnappyStats
-  VERSION = "0.0.3"
+class SnappyStats
+  VERSION = "0.0.4"
 end

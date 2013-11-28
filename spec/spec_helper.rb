@@ -4,7 +4,7 @@
 # loaded once.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-require 'snappy_stats' # and any other gems you need
+# and any other gems you need
 require 'fakeredis'
 require 'timecop'
 RSpec.configure do |config|

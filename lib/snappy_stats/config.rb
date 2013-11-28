@@ -1,15 +1,14 @@
-module SnappyStats
-  module Config
-    extend self
+class SnappyStats
+  class Config
     
     attr_accessor :namespace
     attr_accessor :raise_connection_errors
     
-    def init!  
+    def initialize(options = {})
       # all keys are prefixed with this namespace
-      self.namespace = 'stats'
+      @namespace = 'stats'
       # rescue Redis connection errors
-      self.raise_connection_errors = false      
+      @raise_connection_errors = false      
     end
 
     # Set the Redis connection to use
