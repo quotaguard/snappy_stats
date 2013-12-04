@@ -81,7 +81,7 @@ def recordHit( time, key )
   end
 end
 
-def get(gran, from, to, key)      
+def get(gran, from, to, key)     
   granularity = GRANULARITIES[gran]
   size = granularity[:size]
   factor = granularity[:factor]
@@ -92,10 +92,16 @@ def get(gran, from, to, key)
   ts = from
   i = 0
   results = {}
+  current_key = ""
+  data = nil
   while ts <= to        
     tsround = getRoundedTimestamp( ts, size * factor )
     redis_key  = "#{hash_key}:#{key}:#{gran}:#{tsround}"
-    results[ts] = connection.hget( redis_key, ts )
+    if(current_key != redis_key)
+      data = connection.hgetall( redis_key )
+      current_key = redis_key
+    end
+    results[ts] = data[ ts.to_s ]
     i = i+1 
     ts = ts + GRANULARITIES[gran][:factor]
   end
