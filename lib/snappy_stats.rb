@@ -7,23 +7,23 @@ require 'snappy_stats/config'
 class SnappyStats
 
   GRANULARITIES = {
-		# Available for 24 hours
+    # Available for 24 hours
     minute: {
       size:   1440,
       ttl:    172800,
       factor: 60
-      },
-      hour: {
-    # Available for 7 days
-    size:   168,
-    ttl:    1209600,
-    factor: 3600
     },
-    day: {
+    # Available for 7 days
+    hour: {
+      size:   168,
+      ttl:    1209600,
+      factor: 3600
+    },
     # Available for 24 months
-    size:   365,
-    ttl:    63113880,
-    factor: 86400
+    day: {
+      size:   365,
+      ttl:    63113880,
+      factor: 86400
   }  
 }
 
@@ -32,6 +32,7 @@ attr_accessor :config
 def initialize(options = {})
  @config = SnappyStats::Config.new
  @config.redis = options[:redis]
+ @granularities = options[:granularities]
 end
 
 def hash_key
@@ -44,6 +45,10 @@ end
 
 def connection
   @connection ||= config.redis
+end
+
+def granularities
+  @granularities || GRANULARITIES
 end
 
 def getSecondsTimestamp
@@ -66,8 +71,8 @@ def recordHitNow(key)
 end
 
 def recordHit( time, key )
-  GRANULARITIES.keys.each do | gran |
-    granularity = GRANULARITIES[gran]
+  granularities.keys.each do | gran |
+    granularity = granularities[gran]
     size = granularity[:size]
     factor = granularity[:factor]
     ttl = granularity[:ttl]
@@ -82,7 +87,7 @@ def recordHit( time, key )
 end
 
 def get(gran, from, to, key)     
-  granularity = GRANULARITIES[gran]
+  granularity = granularities[gran]
   size = granularity[:size]
   factor = granularity[:factor]
 
@@ -103,7 +108,7 @@ def get(gran, from, to, key)
     end
     results[ts] = data[ ts.to_s ]
     i = i+1 
-    ts = ts + GRANULARITIES[gran][:factor]
+    ts = ts + granularities[gran][:factor]
   end
   results
 end
